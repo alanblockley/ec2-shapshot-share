@@ -12,7 +12,7 @@ Resources:
   EC2SnapshotShare:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://s3-gji-prd-codedeploy/0a7f4148f18283c22a426f3929c75bb6
+      CodeUri: s3://your-s3-bucket/0a7f4148f11113c22a426f3222275bb6
       Handler: app.lambda_handler
       Runtime: python2.7
       Policies:
@@ -33,7 +33,7 @@ Resources:
           Resource: '*'
       Environment:
         Variables:
-          DEST_ACCOUNT: '239960873109'
+          DEST_ACCOUNT: '111111111111'
       Events:
         Event:
           Type: CloudWatchEvent

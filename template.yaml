@@ -35,7 +35,7 @@ Resources:
              Resource: '*'
       Environment:
         Variables:
-          DEST_ACCOUNT: '239960873109'
+          DEST_ACCOUNT: '111111111111'
       Events:
         Event:
           Type: CloudWatchEvent

@@ -17,7 +17,7 @@ This is a sap-app template for a Lambda function to share all Snapshots in a Pro
         └── test_handler.py
 ```
 
-## GJI Group implementation
+## Implementation
 
 This script is called from Cloudwatch Events. 
 
@@ -84,7 +84,7 @@ Edit the template.yaml file and change the `DEST_ACCOUNT` to reflect your destin
 ```yaml
       Environment:
         Variables:
-          DEST_ACCOUNT: '239960873109'
+          DEST_ACCOUNT: 'xxxxxxxxxx'
 ```
 
 Then simply use the deploy command.
@@ -140,7 +140,7 @@ To simplify troubleshooting, SAM CLI has a command called sam logs. sam logs let
 `NOTE`: This command works for all AWS Lambda functions; not just the ones you deploy using SAM.
 
 ```bash
-sam logs -n HelloWorldFunction --stack-name sam-app --tail
+sam logs -n EC2SnapshotShare --stack-name sam-app --tail
 ```
 
 You can find more information and examples about filtering Lambda function logs in the [SAM CLI Documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-logging.html).
