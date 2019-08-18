@@ -1,0 +1,63 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  ec2-snapshot-share
+
+  SAM Template for ec2-snapshot-share
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 30
+
+Resources:
+  EC2SnapshotShare:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: ec2-snapshot-share/
+      Handler: app.lambda_handler
+      Runtime: python2.7
+      Policies:
+       - Version: '2012-10-17'
+         Statement:
+           - Effect: Allow
+             Action: 
+               - ec2:ModifySnapshotAttribute
+             Resource: '*'
+       - Version: '2012-10-17'
+         Statement:
+           - Effect: Allow
+             Action: 
+               - kms:DescribeKey
+               - kms:CreateGrant
+               - kms:GenerateDataKey
+               - kms:ReEncrypt*
+             Resource: '*'
+      Environment:
+        Variables:
+          DEST_ACCOUNT: '239960873109'
+      Events:
+        Event:
+          Type: CloudWatchEvent
+          Properties:
+            Pattern:
+              source:
+                - 'aws.ec2'
+              detail-type:
+                - 'EBS Snapshot Notification'
+              detail:
+                event:
+                  - 'createSnapshot'
+                result:
+                  - 'succeeded'
+
+
+Outputs:
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  EC2SnapshotShareFunction:
+    Description: "EC2SnapshotShare Lambda Function ARN"
+    Value: !GetAtt EC2SnapshotShare.Arn
+  EC2SnapshotShareIamRole:
+    Description: "Implicit IAM Role created for EC2SnapshotShareFunction function"
+    Value: !GetAtt EC2SnapshotShareRole.Arn
